@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: Networking-Messages.jar lib/Networking-Messages.jar
+Main-Class: server.socket.ApplicationMain
+
