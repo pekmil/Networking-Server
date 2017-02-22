@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClientHandler implements Callable<Void> {
+class ClientHandler implements Callable<Void> {
 
     private static final Logger LOG_REQ = Logger.getLogger(ApplicationMain.LOG_REQ_NAME);
     private static final Logger LOG_ERR = Logger.getLogger(ApplicationMain.LOG_ERR_NAME);
@@ -20,7 +20,7 @@ public class ClientHandler implements Callable<Void> {
 
     private final Protocol protocol;
 
-    public ClientHandler(Socket connection, Protocol protocol) throws IOException {
+    ClientHandler(Socket connection, Protocol protocol) throws IOException {
         this.connection = connection;
         this.output = new ObjectOutputStream(connection.getOutputStream());
         this.input = new ObjectInputStream(connection.getInputStream());
@@ -35,8 +35,7 @@ public class ClientHandler implements Callable<Void> {
                 try{
                     Message msg = (Message) input.readObject();
                     if(protocol.isClosingSignal(msg)){
-                        LOG_REQ.info("Closing connection " + this.connection.getRemoteSocketAddress());
-                        closeConnection();
+                        LOG_REQ.info("Closing signal arrive from: " + this.connection.getRemoteSocketAddress());
                         break;
                     }
                     Message response = protocol.process(msg);
@@ -46,7 +45,6 @@ public class ClientHandler implements Callable<Void> {
                 }
                 catch(IOException ioe){
                     LOG_ERR.log(Level.SEVERE, "Error during client message processing, closing client connection!", ioe);
-                    closeConnection();
                     break;
                 }
             }
@@ -54,18 +52,25 @@ public class ClientHandler implements Callable<Void> {
         catch(RuntimeException re){
             LOG_ERR.log(Level.SEVERE, "Unexpected runtime exception!", re);
         }
+        finally{
+            closeConnection();
+        }
         return null;
     }
 
     private void closeConnection(){
-        if(connection != null && !connection.isClosed()){
-            try {
-                LOG_REQ.info("Closing client connection: " + connection.getRemoteSocketAddress());
-                connection.close();
-            }
-            catch(IOException ioe){
-                LOG_ERR.log(Level.SEVERE, "Error during client connection closing!", ioe);
-            }
+        LOG_REQ.info("Closing client connection: " + connection.getRemoteSocketAddress());
+        try {
+            if(input != null) input.close();
+        }
+        catch(IOException ioe){
+            LOG_ERR.log(Level.SEVERE, "Error during inputstream closing!", ioe);
+        }
+        try {
+            if(output != null) output.close();
+        }
+        catch(IOException ioe){
+            LOG_ERR.log(Level.SEVERE, "Error during outputstream closing!", ioe);
         }
     }
 
