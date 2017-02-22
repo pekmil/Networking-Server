@@ -8,3 +8,5 @@ A Networking-Server projekt egy egyszerű socket illetve nio szerver mintakódot
 4. Lépjünk be a <i>root</i>/classes mappába és adjuk ki a következő parancssori parancsot:<br /><code>jar cfm Networking-Server.jar MANIFEST.MF server/nio/\*.class server/socket/\*.class server/socket/messageboard/\*.class</code>
 
 Az előállt Networking-Server.jar csomag futtatása az alábbi parancssori paranccsal lehetséges:<br /><code>java -jar Networking-Server.jar</code><br />A futtatáshoz szükséges, hogy a Networking-Messages.jar csomagot a Networking-server.jar csomaggal közös mappában helyezzük el. Jelenlegi konfigurációval a socket szerver indul el.
+
+Irodalom: Elliotte Rusty Harold - Java Network Programming (4th edition/O'Reilly)
