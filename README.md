@@ -1,5 +1,7 @@
 # Networking-Server
 
+<b>Java</b>
+
 A Networking-Server projekt egy egyszerű socket illetve nio szerver mintakódot tartalmaz. A szerver futtatásához szükséges a fájlok fordítása és csomagolása. A fordítás során használni kell a Networking-Messages.jar csomagot. A csomagolás során pedig a MANIFEST.MF állományt.
 
 1. Töltsük le a forrásfájlokat tartalmazó mappát (src) egy gyökérkönyvtárba (<i>root</i>)
@@ -10,3 +12,8 @@ A Networking-Server projekt egy egyszerű socket illetve nio szerver mintakódot
 Az előállt Networking-Server.jar csomag futtatása az alábbi parancssori paranccsal lehetséges:<br /><code>java -jar Networking-Server.jar</code><br />A futtatáshoz szükséges, hogy a Networking-Messages.jar csomagot a Networking-server.jar csomaggal közös mappában helyezzük el. Jelenlegi konfigurációval a socket szerver indul el.
 
 Irodalom: Elliotte Rusty Harold - Java Network Programming (4th edition/O'Reilly)
+
+<b>C#</b>
+
+Network programming: https://msdn.microsoft.com/en-us/library/4as0wz7t(v=vs.110).aspx<br />
+Socket programming + examples: https://msdn.microsoft.com/en-us/library/w89fhyex(v=vs.110).aspx
